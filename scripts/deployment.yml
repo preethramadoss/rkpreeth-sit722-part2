@@ -1,0 +1,36 @@
+# Write Kubernetes Deployment Script
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: preeth-books
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: preeth-books
+  template:
+    metadata:
+      labels:
+        app: preeth-books
+    spec:
+      containers: 
+      - name: preeth-books
+        image: 6.2p_pic
+        imagePullPolicy: Always
+        env:
+        - name: DATABASE_URL
+          value: "8000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: video-streaming
+spec:
+  selector:
+    app: video-streaming
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4000
